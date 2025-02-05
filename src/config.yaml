@@ -1,0 +1,55 @@
+dataset: toys  # Dataset name: toys, beauty, steam, ml-1m
+log_file: logs/  # log dir path
+random_seed: 2025  # Random seed
+max_len: 50 # The max length of sequence
+device: cuda:0  # Device selection: 'cpu', 'cuda:0', 'cuda:1'
+batch_size: 512  # Batch Size
+hidden_size: 128  # hidden size of model
+dropout: 0.1  # Dropout of representation
+emb_dropout: 0.3  # Dropout of item embedding
+hidden_act: gelu  # Activation function: gelu or relu
+dif_blocks: 2  # Number of denoised decoder blocks
+epochs: 500 # Number of epochs for training
+decay_step: 100  # Decay step for StepLR
+gamma: 0.1  # Gamma for StepLR
+metric_ks:
+  - 5
+  - 10
+  - 20  # ks for Metric@k
+optimizer: Adam  # Optimizer choice: 'SGD' or 'Adam'
+lr: 0.001  # Learning rate
+weight_decay: 0.00001  # L2 regularization
+momentum: null  # SGD momentum (None if not used)
+schedule_sampler_name: uniform  # Diffusion for t generation
+diffusion_steps: 32  # Diffusion step
+
+lambda_uncertainty: 0.001  # uncertainty weight
+lambda_schedule: false  # Use schedule lambda
+lambda_beta_a: 3
+lambda_beta_b: 3
+rescale_timesteps: true  # Rescale timesteps
+eval_interval: 5  # The number of epoch to eval
+epoch_wo_val: 0  # The number of epoch without eval
+patience: 4  # The number of epoch to wait before early stop
+
+long_head: false  # Long and short sequence, head and long-tail items
+diversity_measure: false  # Measure the diversity of recommendation results
+epoch_time_avg: false  # Calculate the average time of one epoch training
+dif_decoder: att  # Choose denoised decoder: 'att' or 'mlp'
+split_onebyone: false  # Split sequence one by one
+noise_schedule: trunc_lin
+beta_a: 0.3 #beta_schedule
+beta_b: 10
+is_causal: true  # Use causal attention
+dif_objective: pred_x0  # Choose diffusion loss objective: 'pred_noise', 'pred_x0', 'pred_v'
+parallel_ag: true  # Train in a per token auto-aggressive manner
+model: adrec  # Model name:'diffurec','adrec'
+independent: true # Independent diffusion, can only work in adrec
+pretrained: false
+freeze_emb: false
+cfg_scale: 1
+geodesic : false  # Geodesic diffusion,can only use in adrec
+loss: mse # Loss function: 'ce', 'mse'
+loss_scale: 1.
+pcgrad: false
+description: _ # Model brief introduction
