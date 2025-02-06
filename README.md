@@ -4,10 +4,6 @@ This is a PyTorch implementation for our ADRec paper.
 
 ![](asset/title.jpg)
 
-
-
-![ADRec](asset/overview.png)
-
 ## Requirements
 
 The following environment packages need to be installed to set up the required dependencies.
@@ -28,8 +24,6 @@ tqdm==4.66.5
 Our code has been tested running under a Linux server with NVIDIA GeForce RTX 4090 GPU. 
 
 ## Usage
-
-![Training Stage](asset/train_stage.png)
 
 #### **First, navigate to the `src` directory.**
 
