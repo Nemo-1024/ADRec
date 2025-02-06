@@ -2,8 +2,6 @@
 
 This is a PyTorch implementation for our ADRec paper.
 
-![](asset/title.jpg)
-
 ## Requirements
 
 The following environment packages need to be installed to set up the required dependencies.
@@ -72,10 +70,6 @@ python main.py --dataset baby --model pretrain
 ```
 python main.py --dataset baby --model adrec --pcgrad true
 ```
-
-
-
-**If you wish to visualize the embeddings, you first need to run the model to obtain the weight files. After that, set the correct weight file name in `t-SNE.ipynb` and run the notebook.**
 
 ## Acknowledgements
 
