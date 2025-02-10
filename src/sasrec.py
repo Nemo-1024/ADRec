@@ -27,7 +27,7 @@ class SASRec(nn.Module):
 
     def __init__(self, args):
         super(SASRec, self).__init__()
-
+        self.args = args
         # load parameters info
         self.hidden_size = args.hidden_size  # same as embedding_size
         # define layers and loss
@@ -61,7 +61,10 @@ class SASRec(nn.Module):
         return item_emb, position_embedding
     def forward(self, item_seq,tgt_seq,train_flag=True):
         item_emb,position_emb = self.embedding_layer(item_seq)
-        input_emb = item_emb + position_emb
+        if self.args.model == 'pretrain':
+            input_emb = item_emb
+        else:
+            input_emb = item_emb + position_emb
         input_emb = self.LayerNorm(input_emb)
         input_emb = self.dropout(input_emb)
         mask_seq = (item_seq> 0).float()
