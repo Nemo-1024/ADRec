@@ -55,7 +55,7 @@ python main.py --dataset baby --model adrec --pcgrad true
 
 
 
-We also release some baselines.  Complete code for each experiment will be released upon acceptance of the paper.
+**We also release some baselines.  Complete code for each experiment will be released upon acceptance of the paper.**
 
 #### DiffuRec:
 
