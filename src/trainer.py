@@ -6,15 +6,8 @@ from model import Att_Diffuse_model
 from pcgrad import PCGrad
 from torch import optim
 from sasrec import SASRec
-from bert4rec import BERT4Rec
-from core import CORE
-from eulerformer import EulerFormerNet
-from fearec import FEARec
-from gru4rec import GRU4Rec
-from lightsans import LightSANs
-from stosa import DistSAModel
 
-from svae import SVAE
+
 # from torchtune.training.lr_schedulers import get_cosine_schedule_with_warmup
 def extract(data):
     seq= data[0]
@@ -64,21 +57,6 @@ def choose_model(args):
         model = Att_Diffuse_model(args)
     elif args.model == 'sasrec' or args.model == 'pretrain':
         model = SASRec(args)
-    elif args.model == 'bert4rec':
-        args.is_causal = False
-        model = BERT4Rec(args)
-    elif args.model == 'core':
-        model = CORE(args)
-    elif args.model == 'eulerformer':
-        model = EulerFormerNet(args)
-    elif args.model == 'fearec':
-        model = FEARec(args)
-    elif args.model == 'gru4rec':
-        model = GRU4Rec(args)
-    elif args.model == 'lightsans':
-        model = LightSANs(args)
-    elif args.model == 'svae':
-        model = SVAE(args)
     else:
         model=None
     return model.to(device)

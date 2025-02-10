@@ -1,11 +1,10 @@
-# 定义数据集数组
-datasets=('yelp')
+
+#datasets=('ml-100k')
 #datasets=('baby' 'beauty' 'ml-100k' 'sports' 'toys' 'yelp')
-#models=("lightsans" "bert4rec" "core" "eulerformer" "fearec" "gru4rec")
-#models=("diffurec" "adrec" "pretrain" "dreamrec")
+#models=("adrec" "diffurec"  "dreamrec")
 models=('adrec')
-device='cuda:1'
-# 遍历数据集数组，运行每个实验
+device='cuda:0'
+
 for j in "${models[@]}"; do
     for i in "${datasets[@]}"; do
       echo "Running experiment: ${i}"

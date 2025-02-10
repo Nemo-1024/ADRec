@@ -249,16 +249,4 @@ class DiffuRec(nn.Module):
         losses = F.mse_loss(denoised_seq[:,-1],item_tag[:,-1])
         return denoised_seq, losses
 
-    def p_losses(self, denoised_seq, tag_emb, mask):
-        # 计算损失，按元素逐点计算MSE损失
-        loss = F.mse_loss(denoised_seq, tag_emb, reduction='none')
-
-        # 使用mask加权每个样本的损失
-        mask_sum = mask.sum(1, keepdim=True)  # 计算每个样本的mask总和
-        weighted_loss = loss * mask.unsqueeze(-1) / (mask_sum + 1e-8)  # 避免除0错误，加入一个小值
-
-        # 对每个序列样本求和，然后对所有样本求平均
-        loss = weighted_loss.sum(1).mean()
-        return loss
-
 

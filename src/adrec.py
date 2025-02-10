@@ -69,16 +69,8 @@ class DenoisedModel(nn.Module):
             # rep_item = torch.where(mask.unsqueeze(-1), torch.zeros_like(rep_item), rep_item)
         t=t.reshape(x_t.shape[0],-1)
         time_emb = self.time_embed(self.timestep_embedding(t, self.hidden_size))
-        # lambda_uncertainty = th.normal(mean=th.full(rep_item.shape, 1.0), std=th.full(rep_item.shape, 1.0)).to(x_t.device)
-        # lambda_uncertainty = th.zeros_like(rep_item)
-        # lambda_uncertainty = th.ones_like(rep_item)
-        # lambda_uncertainty = th.normal(mean=th.full(rep_item.shape, self.lambda_uncertainty), std=th.full(rep_item.shape, self.lambda_uncertainty)).to(x_t.device)  ## distribution
         lambda_uncertainty = self.lambda_uncertainty  ### fixed
-        # print(lambda_uncertainty)
-        # rep_diffu = self.admlp(x_t,t,rep_item)
-        # print(mask_tgt.shape)
-        # position_emb = self.position_embeddings(x_t)
-        # rep_diffu = rep_item + lambda_uncertainty * (x_t + time_emb + position_emb)
+
         rep_diffu = rep_item + lambda_uncertainty * (x_t + time_emb)
         # rep_diffu = self.cross_att(x_t + time_emb,rep_item,rep_item,mask_seq,is_causal=True)
         # rep_diffu = torch.cat([(x_t + time_emb)*mask_tgt.unsqueeze(-1),rep_item],dim=-1)
@@ -278,17 +270,6 @@ class AdRec(nn.Module):
         losses = losses.sum(1).mean()
         return denoised_seq, losses
 
-    def p_losses(self, denoised_seq, tag_emb, mask):
-        # 计算损失，按元素逐点计算MSE损失
-        loss = F.mse_loss(denoised_seq, tag_emb, reduction='none')
-
-        # 使用mask加权每个样本的损失
-        mask_sum = mask.sum(1, keepdim=True)  # 计算每个样本的mask总和
-        weighted_loss = loss * mask.unsqueeze(-1) / (mask_sum + 1e-8)  # 避免除0错误，加入一个小值
-
-        # 对每个序列样本求和，然后对所有样本求平均
-        loss = weighted_loss.sum(1).mean()
-        return loss
 
 
 
