@@ -33,24 +33,6 @@ Our code has been tested running under a Linux server with NVIDIA GeForce RTX 40
 python main.py --dataset baby --model adrec
 ```
 
-#### DiffuRec:
-
-```
-python main.py --dataset baby --model diffurec
-```
-
-#### DreamRec:
-
-```
-python main.py --dataset baby --model dreamrec
-```
-
-#### DreamRec:
-
-```
-python main.py --dataset baby --model sasrec
-```
-
 **We also provide a script that facilitates running multiple models across various datasets.**
 
 ```
@@ -70,6 +52,30 @@ python main.py --dataset baby --model pretrain
 ```
 python main.py --dataset baby --model adrec --pcgrad true
 ```
+
+
+
+We also release some baselines.  Complete code for each experiment will be released upon acceptance of the paper.
+
+#### DiffuRec:
+
+```
+python main.py --dataset baby --model diffurec
+```
+
+#### DreamRec:
+
+```
+python main.py --dataset baby --model dreamrec
+```
+
+#### SASRec+:
+
+```
+python main.py --dataset baby --model sasrec
+```
+
+
 
 ## Acknowledgements
 
