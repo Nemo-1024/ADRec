@@ -1,8 +1,10 @@
-# ADRec: Unlocking the Power of Diffusion Models in Sequential Recommendation [![Cite us](https://img.shields.io/badge/Cite--us-B31B1B?logo=academia&style=flat-square)](#-citation)
+# ADRec: Unlocking the Power of Diffusion Models in Sequential Recommendation [![Static Badge](https://img.shields.io/badge/Cite--us-007ec6?style=flat-square&logo=google-scholar&logoColor=white)](#-citation) 
 
 An official implementation for the  KDD 2025 paper 'Unlocking the Power of Diffusion Models in Sequential Recommendation: A Simple and Effective Approach'. 
 
 Jialei Chen, Yuanbo Xu^*^ and Yiheng Jiang
+
+<img src="README.assets/overview.svg" alt="overview" style="zoom:150%;" />
 
 ## Requirements
 
