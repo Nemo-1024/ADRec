@@ -8,7 +8,7 @@ Jialei Chen, Yuanbo Xu✉ and Yiheng Jiang
 
 ## Requirements
 
-The following environment packages need to be installed to set up the required dependencies.
+The following environment packages must be installed to set up the required dependencies.
 
 ```
 auto_mix_prep==0.2.0
@@ -23,7 +23,7 @@ torchtune==0.4.0
 tqdm==4.66.5
 ```
 
-Our code has been tested running under a Linux server with NVIDIA GeForce RTX 4090 GPU. 
+Our code has been tested, running under a Linux server with NVIDIA GeForce RTX 4090 GPU. 
 
 ## Usage
 
@@ -37,7 +37,7 @@ Our code has been tested running under a Linux server with NVIDIA GeForce RTX 40
 python main.py --dataset baby --model adrec
 ```
 
-**We also provide a script that facilitates running multiple models across various datasets.**
+**We also provide a script to run multiple models across various datasets.**
 
 ```
 bash baseline.bash
@@ -45,7 +45,7 @@ bash baseline.bash
 
 #### Pretrain embedding:
 
-If you want to reproduce the pretrained weights, you can run the following code:
+If you want to reproduce the pre-trained weights, you can run the following code:
 
 ```
 python main.py --dataset baby --model pretrain
@@ -85,7 +85,7 @@ python main.py --dataset baby --model sasrec
 
 The t-SNE visualization experiment can be conducted via `/src/t-SNE.ipynb`.
 
-### Comprehensive evaluation in the original embedding space
+### Comprehensive evaluation of the original embedding space
 
 A comprehensive evaluation of embedding representations in the original embedding space can be performed using `/src/embedding_metrics.ipynb`.
 
