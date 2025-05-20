@@ -37,12 +37,6 @@ Our code has been tested, running under a Linux server with NVIDIA GeForce RTX 4
 python main.py --dataset baby --model adrec
 ```
 
-**We also provide a script to run multiple models across various datasets.**
-
-```
-bash baseline.bash
-```
-
 #### Pretrain embedding:
 
 If you want to reproduce the pre-trained weights, you can run the following code:
@@ -59,7 +53,7 @@ python main.py --dataset baby --model adrec --pcgrad true
 
 
 
-**We also release some baselines. **
+### We also release some baselines. 
 
 #### DiffuRec:
 
@@ -80,6 +74,14 @@ python main.py --dataset baby --model sasrec
 ```
 
 
+
+### **We also provide a script to run multiple models across various datasets.**
+
+```
+bash baseline.bash
+```
+
+#### 
 
 ### t-SNE visualization
 
