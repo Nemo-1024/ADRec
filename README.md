@@ -2,7 +2,7 @@
 
 An official implementation for the  KDD 2025 paper 'Unlocking the Power of Diffusion Models in Sequential Recommendation: A Simple and Effective Approach'. 
 
-Jialei Chen, Yuanbo Xu^*^ and Yiheng Jiang
+Jialei Chen, Yuanbo Xu✉ and Yiheng Jiang
 
 <img src="README.assets/overview.svg" alt="overview" style="zoom:150%;" />
 
