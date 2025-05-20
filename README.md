@@ -1,6 +1,8 @@
-# ADRec
+# ADRec: Unlocking the Power of Diffusion Models in Sequential Recommendation
 
-This is a PyTorch implementation for our ADRec paper.
+An official implementation for the  KDD 2025 paper 'Unlocking the Power of Diffusion Models in Sequential Recommendation: A Simple and Effective Approach'. [![Cite us](https://img.shields.io/badge/Cite--us-B31B1B?logo=academia&style=flat-square)](https://cdn.jsdelivr.net/gh/your_username/your_repo#-citation)
+
+Jialei Chen, Yuanbo Xu^*^ and Yiheng Jiang
 
 ## Requirements
 
@@ -47,7 +49,7 @@ If you want to reproduce the pretrained weights, you can run the following code:
 python main.py --dataset baby --model pretrain
 ```
 
-#### ADRec with PCGrad:
+#### ADRec with multi-task framework PCGrad:
 
 ```
 python main.py --dataset baby --model adrec --pcgrad true
@@ -55,7 +57,7 @@ python main.py --dataset baby --model adrec --pcgrad true
 
 
 
-**We also release some baselines.  Complete code for each experiment will be released upon acceptance of the paper.**
+**We also release some baselines. **
 
 #### DiffuRec:
 
@@ -77,7 +79,28 @@ python main.py --dataset baby --model sasrec
 
 
 
+### t-SNE visualization
+
+The t-SNE visualization experiment can be conducted via `/src/t-SNE.ipynb`.
+
+### Comprehensive evaluation in the original embedding space
+
+A comprehensive evaluation of embedding representations in the original embedding space can be performed using `/src/embedding_metrics.ipynb`.
+
 ## Acknowledgements
 
 [RecBole](https://recbole.io/), [DiffuRec](https://github.com/WHUIR/DiffuRec), [DreamRec](https://github.com/YangZhengyi98/DreamRec) and [SASRec+](https://github.com/antklen/sasrec-bert4rec-recsys23).
 
+## 📄 Citation
+
+If you find this work useful, please consider citing our paper:
+
+```
+@inproceedings{JLchen2025ADRec,
+	title={Unlocking the Power of Diffusion Models in Sequential Recommendation: A Simple and Effective Approach},
+	author={Jialei Chen and Yuanbo Xu and Yiheng Jiang},
+	booktitle={Proceedings of the 30th ACM SIGKDD Conference on Knowledge Discovery and Data Mining (KDD)},
+	year={2025},
+	organization={ACM}
+}
+```
