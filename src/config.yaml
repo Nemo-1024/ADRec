@@ -24,15 +24,11 @@ schedule_sampler_name: uniform  # Diffusion for t generation
 diffusion_steps: 32  # Diffusion step
 
 lambda_uncertainty: 0.001  # uncertainty weight
-lambda_schedule: false  # Use schedule lambda
-lambda_beta_a: 3
-lambda_beta_b: 3
 rescale_timesteps: true  # Rescale timesteps
 eval_interval: 5  # The number of epoch to eval
 epoch_wo_val: 0  # The number of epoch without eval
 patience: 4  # The number of epoch to wait before early stop
 
-long_head: false  # Long and short sequence, head and long-tail items
 diversity_measure: false  # Measure the diversity of recommendation results
 epoch_time_avg: false  # Calculate the average time of one epoch training
 dif_decoder: att  # Choose denoised decoder: 'att' or 'mlp'

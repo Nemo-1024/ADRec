@@ -1,5 +1,5 @@
 
-#datasets=('ml-100k')
+datasets=('yelp')
 #datasets=('baby' 'beauty' 'ml-100k' 'sports' 'toys' 'yelp')
 #models=("adrec" "diffurec"  "dreamrec")
 models=('adrec')

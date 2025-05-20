@@ -3,8 +3,8 @@ import torch as th
 import math
 import torch
 import torch.nn.functional as F
-from einops import rearrange, repeat, reduce, pack, unpack
-from einops.layers.torch import Rearrange
+from einops import rearrange
+
 def exists(v):
     return v is not None
 def default(v, d):

@@ -134,35 +134,6 @@ class Data_Test():
         return dataloader
 
 
-class CHLSDataset(data_utils.Dataset):
-    def __init__(self, data, max_len):
-        self.data = data
-        self.max_len = max_len
-
-    def __len__(self):
-        return len(self.data)
-
-    def __getitem__(self, index):
-
-        data_temp = self.data[index]
-        seq = data_temp[:-1]
-        answer = [data_temp[-1]]
-        seq = seq[-self.max_len:]
-        padding_len = self.max_len - len(seq)
-        seq = [0] * padding_len + seq
-        return torch.LongTensor(seq), torch.LongTensor(answer)
-
-
-class Data_CHLS():
-    def __init__(self, data, args):
-        self.batch_size = args.batch_size
-        self.max_len = args.max_len
-        self.data = data
-
-    def get_pytorch_dataloaders(self):
-        dataset = CHLSDataset(self.data, self.max_len)
-        dataloader = data_utils.DataLoader(dataset, batch_size=self.batch_size, shuffle=False, pin_memory=True)
-        return dataloader
 
 def _extract_into_tensor(arr, timesteps, broadcast_shape):
     """
@@ -240,72 +211,3 @@ def fix_random_seed_as(random_seed):
     cudnn.benchmark = False
 
 
-
-
-
-def cold_hot_long_short(data_raw, dataset_name):
-    item_list = []
-    len_list = []
-    target_item = []
-
-    for id_temp in data_raw['train']:
-        temp_list = data_raw['train'][id_temp] + data_raw['val'][id_temp] + data_raw['test'][id_temp]
-        len_list.append(len(temp_list))
-        target_item.append(data_raw['test'][id_temp][0])
-        item_list += temp_list
-    item_num_count = Counter(item_list)
-    split_num = np.percentile(list(item_num_count.values()), 80)
-    cold_item, hot_item = [], []
-    for item_num_temp in item_num_count.items():
-        if item_num_temp[1] < split_num:
-            cold_item.append(item_num_temp[0])
-        else:
-            hot_item.append(item_num_temp[0])
-    cold_ids, hot_ids = [], []
-    cold_list, hot_list = [], []
-    for id_temp, item_temp in enumerate(data_raw['test'].values()):
-        if item_temp[0] in hot_item:
-            hot_ids.append(id_temp)
-            if dataset_name == 'ml-1m':
-                hot_list.append(
-                    data_raw['train'][id_temp + 1] + data_raw['val'][id_temp + 1] + data_raw['test'][id_temp + 1])
-            else:
-                hot_list.append(data_raw['train'][id_temp] + data_raw['val'][id_temp] + data_raw['test'][id_temp])
-        else:
-            cold_ids.append(id_temp)
-            if dataset_name == 'ml-1m':
-                cold_list.append(
-                    data_raw['train'][id_temp + 1] + data_raw['val'][id_temp + 1] + data_raw['test'][id_temp + 1])
-            else:
-                cold_list.append(data_raw['train'][id_temp] + data_raw['val'][id_temp] + data_raw['test'][id_temp])
-    cold_hot_dict = {'hot': hot_list, 'cold': cold_list}
-
-    len_short = np.percentile(len_list, 20)
-    len_midshort = np.percentile(len_list, 40)
-    len_midlong = np.percentile(len_list, 60)
-    len_long = np.percentile(len_list, 80)
-
-    len_seq_dict = {'short': [], 'mid_short': [], 'mid': [], 'mid_long': [], 'long': []}
-    for id_temp, len_temp in enumerate(len_list):
-        if dataset_name == 'ml-1m':
-            temp_seq = data_raw['train'][id_temp + 1] + data_raw['val'][id_temp + 1] + data_raw['test'][id_temp + 1]
-        else:
-            temp_seq = data_raw['train'][id_temp] + data_raw['val'][id_temp] + data_raw['test'][id_temp]
-        if len_temp <= len_short:
-            len_seq_dict['short'].append(temp_seq)
-        elif len_short < len_temp <= len_midshort:
-            len_seq_dict['mid_short'].append(temp_seq)
-        elif len_midshort < len_temp <= len_midlong:
-            len_seq_dict['mid'].append(temp_seq)
-        elif len_midlong < len_temp <= len_long:
-            len_seq_dict['mid_long'].append(temp_seq)
-        else:
-            len_seq_dict['long'].append(temp_seq)
-    return cold_hot_dict, len_seq_dict, split_num, [len_short, len_midshort, len_midlong, len_long], len_list, list(
-        item_num_count.values())
-def lambda_beta_schedule(timesteps, a=1.0, b=1.0):
-    # Generate time steps from 0 to 1
-    s = np.linspace(0, 1, timesteps)
-    # Calculate alphas_cumprod(s) using beta.ppf(1 - s)
-    schedule = beta.ppf(s, a, b)
-    return schedule

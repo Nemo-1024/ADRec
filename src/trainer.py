@@ -28,12 +28,7 @@ def optimizers(model, args):
     if args.optimizer.lower() == 'adam':
         if args.model == 'adrec':
             opt= optim.Adam(model.parameters(), lr=args.lr, weight_decay=args.weight_decay)
-            # opt = optim.Adam([
-            #     {'params': model.item_embedding.parameters(), 'lr': args.lr * 0.1},
-            #     # 为embedding层设置较小的学习率
-            #     {'params': model.diffu.parameters(), 'lr': args.lr},
-            #     {'params': model.hist_norm.parameters(), 'lr': args.lr},
-            # ],weight_decay=args.weight_decay)
+
         else:
             opt = optim.Adam(model.parameters(), lr=args.lr, weight_decay=args.weight_decay)
     elif args.optimizer.lower() == 'sgd':
@@ -62,8 +57,7 @@ def choose_model(args):
     return model.to(device)
 # ("bert4rec" "core" "eulerformer" "fearec" "gru4rec" "trimlp")
 def load_data(args):
-    # if args.dataset in ['kuairec','ml-1m','ml-10m','ml-20m']:
-    #     args.max_len = 100
+
     path_data = '../datasets/data/' + args.dataset + '/dataset.pkl'
     with open(path_data, 'rb') as f:
         data_raw = pickle.load(f)
@@ -83,31 +77,17 @@ def model_train(model_joint,tra_data_loader, val_data_loader, test_data_loader, 
     # model_joint = torch.compile(model_joint, )
     torch.set_float32_matmul_precision('high')
     optimizer = PCGrad(optimizers(model_joint, args),args)
-    # lr_scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=args.decay_step, gamma=args.gamma)
     lr_scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer.optim, T_max=500)
-    # lr_scheduler = get_cosine_schedule_with_warmup(optimizer.optim, num_warmup_steps=10, num_training_steps=args.epochs,num_cycles=0.5)
     best_metrics_dict = {'Best_HR@5': 0, 'Best_NDCG@5': 0, 'Best_HR@10': 0, 'Best_NDCG@10': 0, 'Best_HR@20': 0, 'Best_NDCG@20': 0}
     best_epoch = {'Best_epoch_HR@5': 0, 'Best_epoch_NDCG@5': 0, 'Best_epoch_HR@10': 0, 'Best_epoch_NDCG@10': 0, 'Best_epoch_HR@20': 0, 'Best_epoch_NDCG@20': 0}
     bad_count = 0
     best_model = None
-    best_epoch_temp=0
-    # warmup_flag=True
-    # torch.cuda.empty_cache()  # 清理未使用的缓存
-    # logger.info(model_joint)
-    # print(model_joint)
-    # schedule = lambda_beta_schedule(epochs, args.lambda_beta_a, args.lambda_beta_b)
     for epoch_temp in range(epochs):
         model_joint.train()
         if epoch_temp ==5 and args.model =='adrec':
             print(f'warm up finishied in epoch {epoch_temp}')
             logger.info(f'warm up finishied in epoch {epoch_temp}')
             model_joint.item_embedding.weight.requires_grad = True
-
-        # print(model_joint.item_embedding.weight.requires_grad)
-        # print('Epoch: {}'.format(epoch_temp))
-        # logger.info('Epoch: {}'.format(epoch_temp))
-        # if args.model =='adrec' and args.lambda_schedule:
-        #     model_joint.diffu.net.lambda_uncertainty = schedule[epoch_temp]
         ce_losses = []
         dif_losses = []
         flag_update = 0
@@ -181,14 +161,6 @@ def model_train(model_joint,tra_data_loader, val_data_loader, test_data_loader, 
                 logger.info(best_metrics_dict)
                 logger.info(best_epoch)
                 best_model = copy.deepcopy(model_joint)
-                # best_model = best_model._orig_mod
-            # if bad_count == 1 and warmup_flag:
-            #     print(f'warm up finishied in epoch {epoch_temp}')
-            #     logger.info(f'warm up finishied in epoch {epoch_temp}')
-            #     model_joint.item_embedding.weight.requires_grad = True
-            #     bad_count=0
-            #     args.eval_interval = 5
-            #     warmup_flag = False
             if bad_count >= args.patience:
                 break
     # if args.model == 'adrec' and args.lambda_schedule:

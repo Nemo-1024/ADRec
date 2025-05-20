@@ -1,14 +1,9 @@
 import torch.nn as nn
-import torch as th
-from step_sample import create_named_schedule_sampler
-import numpy as np
-import math
-import torch
+
 import torch.nn.functional as F
-from common import SiLU, TransformerEncoder, MultiHeadedAttention
+from common import SiLU, TransformerEncoder
 from utils import _extract_into_tensor,exponential_mapping
 from step_sample import *
-# from torchtune.modules import RotaryPositionalEmbeddings
 
 class DenoisedModel(nn.Module):
     def __init__(self, args):
@@ -29,12 +24,7 @@ class DenoisedModel(nn.Module):
                                         )
 
         self.lambda_uncertainty = args.lambda_uncertainty
-        # self.cross_att = MultiHeadedAttention(4,self.hidden_size,args.dropout)
-        # self.norm_diffu_rep = LayerNorm(self.hidden_size)
-        # self.dropout = nn.Dropout(args.dropout)
-        # self.transdecoder =TransformerDecoder(args,num_blocks=2)
-        # self.admlp = SimpleMLPAdaLN(args,num_blocks=2)
-        # self.position_embeddings = RotaryPositionalEmbeddings(args.hidden_size)
+
 
     def timestep_embedding(self, timesteps, dim, max_period=10000):
         """
@@ -72,21 +62,13 @@ class DenoisedModel(nn.Module):
         lambda_uncertainty = self.lambda_uncertainty  ### fixed
 
         rep_diffu = rep_item + lambda_uncertainty * (x_t + time_emb)
-        # rep_diffu = self.cross_att(x_t + time_emb,rep_item,rep_item,mask_seq,is_causal=True)
-        # rep_diffu = torch.cat([(x_t + time_emb)*mask_tgt.unsqueeze(-1),rep_item],dim=-1)
-        # rep_diffu = self.linear_poj(rep_diffu)
-        # rep_diffu = self.norm_diffu_rep(self.dropout(rep_diffu))
+
         if isinstance(self.decoder, nn.Sequential):
             # 如果是 MLP，直接应用
             rep_diffu = self.decoder(rep_diffu)
         else:
             rep_diffu = self.decoder(rep_diffu, mask_seq)
-        # rep_diffu = self.transdecoder(x_t, rep_item, mask_tgt,mask_seq)
 
-        # for net in self.mlp:
-        #     rep_diffu = net(rep_diffu)
-        # rep_diffu = self.norm_diffu_rep(self.dropout(rep_diffu))
-        # rep_diffu = self.norm_diffu_rep(rep_diffu)
         return rep_diffu
 
 class AdRec(nn.Module):
@@ -172,14 +154,6 @@ class AdRec(nn.Module):
             if i in self.use_timesteps:
                 timestep_map.append(i)
         return timestep_map
-
-    # def scale_t(self, ts):
-    #     map_tensor = th.tensor(self.timestep_map, device=ts.device, dtype=ts.dtype)
-    #     new_ts = map_tensor[ts]
-    #     # print(new_ts)
-    #     if self.rescale_timesteps:
-    #         new_ts = new_ts.float() * (1000.0 / self.original_num_steps)
-    #     return new_ts
 
     def _scale_timesteps(self, t):
         if self.rescale_timesteps:
