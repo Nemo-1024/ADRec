@@ -105,6 +105,7 @@ If you find this work useful, please consider citing our paper:
 	author={Jialei Chen and Yuanbo Xu and Yiheng Jiang},
 	booktitle={Proceedings of the 30th ACM SIGKDD Conference on Knowledge Discovery and Data Mining (KDD)},
 	year={2025},
-	organization={ACM}
+	organization={ACM},
+	doi = {10.1145/3711896.3737172}
 }
 ```
