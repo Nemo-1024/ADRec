@@ -1,4 +1,4 @@
-# ADRec: Unlocking the Power of Diffusion Models in Sequential Recommendation [![Static Badge](https://img.shields.io/badge/Cite--us-007ec6?style=flat-square&logo=google-scholar&logoColor=white)](#-citation) 
+# ADRec: Unlocking the Power of Diffusion Models in Sequential Recommendation [![Static Badge](https://img.shields.io/badge/Cite--us-007ec6?style=flat-square&logo=google-scholar&logoColor=white)](#-citation) [ArXiv](https://arxiv.org/abs/2505.19544)
 
 An official implementation for the  KDD 2025 paper 'Unlocking the Power of Diffusion Models in Sequential Recommendation: A Simple and Effective Approach'. 
 
